@@ -1,142 +1,264 @@
-%{?_javapackages_macros:%_javapackages_macros}
-# When building version under development (non-release)
-# %%global snap -SNAPSHOT
-%global snap %{nil}
 
-Name:           tycho-extras
-Version:        0.19.0
-Release:        1.0%{?dist}
-Summary:        Additional plugins for Tycho
+%undefine _compress
+%undefine _extension
+%global _duplicate_files_terminate_build 0
+%global _files_listed_twice_terminate_build 0
+%global _unpackaged_files_terminate_build 0
+%global _nonzero_exit_pkgcheck_terminate_build 0
+%global _use_internal_dependency_generator 0
+%global __find_requires /bin/sed -e 's/.*//'
+%global __find_provides /bin/sed -e 's/.*//'
 
+Name:		tycho-extras
+Version:	0.19.0
+Release:	1.0
+License:	GPLv3+
+Source0:	tycho-extras-0.19.0-1.0-omv2014.0.noarch.rpm
+Source1:	tycho-extras-javadoc-0.19.0-1.0-omv2014.0.noarch.rpm
 
-License:        EPL
-URL:            http://eclipse.org/tycho/
-Source0:        http://git.eclipse.org/c/tycho/org.eclipse.tycho.extras.git/snapshot/tycho-extras-0.19.x.tar.bz2
-Patch0:         %{name}-fix-build.patch
-Patch1:         %{name}-use-custom-resolver.patch
-
-BuildArch:      noarch
-
-BuildRequires:  jpackage-utils
-BuildRequires:  java-devel >= 1.5
-BuildRequires:  jgit
-BuildRequires:  tycho
-
-Requires:       jpackage-utils
-Requires:       java >= 1.5
-Requires:       jgit
-Requires:       tycho
-
+URL:		https://abf.rosalinux.ru/openmandriva/tycho-extras
+BuildArch:	noarch
+Summary:	tycho-extras bootstrap version
+Requires:	javapackages-bootstrap
+Requires:	java >= 1.5
+Requires:	jgit
+Requires:	jpackage-utils
+Requires:	tycho
+Provides:	mvn(org.eclipse.tycho.extras:target-platform-validation-plugin) = 0.19.0
+Provides:	mvn(org.eclipse.tycho.extras:tycho-buildtimestamp-jgit) = 0.19.0
+Provides:	mvn(org.eclipse.tycho.extras:tycho-custom-bundle-plugin) = 0.19.0
+Provides:	mvn(org.eclipse.tycho.extras:tycho-eclipserun-plugin) = 0.19.0
+Provides:	mvn(org.eclipse.tycho.extras:tycho-extras) = 0.19.0
+Provides:	mvn(org.eclipse.tycho.extras:tycho-extras:pom:) = 0.19.0
+Provides:	mvn(org.eclipse.tycho.extras:tycho-p2-extras-plugin) = 0.19.0
+Provides:	mvn(org.eclipse.tycho.extras:tycho-pack200) = 0.19.0
+Provides:	mvn(org.eclipse.tycho.extras:tycho-pack200-impl) = 0.19.0
+Provides:	mvn(org.eclipse.tycho.extras:tycho-pack200:pom:) = 0.19.0
+Provides:	mvn(org.eclipse.tycho.extras:tycho-pack200a-plugin) = 0.19.0
+Provides:	mvn(org.eclipse.tycho.extras:tycho-pack200b-plugin) = 0.19.0
+Provides:	mvn(org.eclipse.tycho.extras:tycho-source-feature-plugin) = 0.19.0
+Provides:	mvn(org.eclipse.tycho.extras:tycho-sourceref-jgit) = 0.19.0
+Provides:	mvn(org.eclipse.tycho.extras:tycho-version-bump-plugin) = 0.19.0
+Provides:	mvn(org.eclipse.tycho:pack200) = 0.19.0
+Provides:	mvn(org.eclipse.tycho:pack200:pom:) = 0.19.0
+Provides:	mvn(org.eclipse.tycho:target-platform-validation-plugin) = 0.19.0
+Provides:	mvn(org.eclipse.tycho:tycho-buildtimestamp-jgit) = 0.19.0
+Provides:	mvn(org.eclipse.tycho:tycho-custom-bundle-plugin) = 0.19.0
+Provides:	mvn(org.eclipse.tycho:tycho-eclipserun-plugin) = 0.19.0
+Provides:	mvn(org.eclipse.tycho:tycho-extras) = 0.19.0
+Provides:	mvn(org.eclipse.tycho:tycho-extras:pom:) = 0.19.0
+Provides:	mvn(org.eclipse.tycho:tycho-p2-extras-plugin) = 0.19.0
+Provides:	mvn(org.eclipse.tycho:tycho-pack200-impl) = 0.19.0
+Provides:	mvn(org.eclipse.tycho:tycho-pack200a-plugin) = 0.19.0
+Provides:	mvn(org.eclipse.tycho:tycho-pack200b-plugin) = 0.19.0
+Provides:	mvn(org.eclipse.tycho:tycho-source-feature-plugin) = 0.19.0
+Provides:	mvn(org.eclipse.tycho:tycho-sourceref-jgit) = 0.19.0
+Provides:	mvn(org.eclipse.tycho:tycho-version-bump-plugin) = 0.19.0
+Provides:	mvn(org.sonatype.tycho:pack200) = 0.19.0
+Provides:	mvn(org.sonatype.tycho:pack200:pom:) = 0.19.0
+Provides:	mvn(org.sonatype.tycho:target-platform-validation-plugin) = 0.19.0
+Provides:	mvn(org.sonatype.tycho:tycho-buildtimestamp-jgit) = 0.19.0
+Provides:	mvn(org.sonatype.tycho:tycho-custom-bundle-plugin) = 0.19.0
+Provides:	mvn(org.sonatype.tycho:tycho-eclipserun-plugin) = 0.19.0
+Provides:	mvn(org.sonatype.tycho:tycho-extras) = 0.19.0
+Provides:	mvn(org.sonatype.tycho:tycho-extras:pom:) = 0.19.0
+Provides:	mvn(org.sonatype.tycho:tycho-p2-extras-plugin) = 0.19.0
+Provides:	mvn(org.sonatype.tycho:tycho-pack200-impl) = 0.19.0
+Provides:	mvn(org.sonatype.tycho:tycho-pack200a-plugin) = 0.19.0
+Provides:	mvn(org.sonatype.tycho:tycho-pack200b-plugin) = 0.19.0
+Provides:	mvn(org.sonatype.tycho:tycho-source-feature-plugin) = 0.19.0
+Provides:	mvn(org.sonatype.tycho:tycho-sourceref-jgit) = 0.19.0
+Provides:	mvn(org.sonatype.tycho:tycho-version-bump-plugin) = 0.19.0
+Provides:	tycho-extras = 0.19.0-1.0:2014.0
 
 %description
-A small set of plugins that work with Tycho to provide additional functionality
-when building projects of an OSGi nature.
-
-
-%package javadoc
-Summary:        Java docs for %{name}
-
-Requires:       jpackage-utils
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
-%prep
-%setup -q -n tycho-extras-0.19.x
-%patch0 -p1
-%patch1 -p1
-
-# maven-properties-plugin is only needed for tests
-%pom_remove_plugin org.eclipse.m2e:lifecycle-mapping
-%pom_remove_plugin org.sonatype.plugins:maven-properties-plugin tycho-p2-extras-plugin
-# remove org.apache.maven:apache-maven zip
-%pom_remove_dep org.apache.maven:apache-maven tycho-p2-extras-plugin
-
-%build
-# To run tests, we need :
-# maven-properties-plugin (unclear licensing)
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
-
-%install
-install -d -m 755 %{buildroot}%{_javadir}/%{name}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-
-install -pm 644 pom.xml  %{buildroot}%{_mavenpomdir}/JPP.%{name}-main.pom
-%add_maven_depmap JPP.%{name}-main.pom -a "org.eclipse.tycho:tycho-extras,org.sonatype.tycho:tycho-extras"
-
-for mod in tycho-{custom-bundle,eclipserun,source-feature,version-bump}-plugin \
-           tycho-{buildtimestamp,sourceref}-jgit tycho-p2-extras-plugin \
-           pack200/tycho-pack200{{a,b}-plugin,-impl} \
-           target-platform-validation-plugin ; do
-   echo $mod
-   aid=`basename $mod`
-   install -pm 644 $mod/pom.xml  %{buildroot}%{_mavenpomdir}/JPP.%{name}-$aid.pom
-   install -m 644 $mod/target/$aid-%{version}%{snap}.jar %{buildroot}%{_javadir}/%{name}/$aid.jar
-   %add_maven_depmap JPP.%{name}-$aid.pom %{name}/$aid.jar -a "org.eclipse.tycho:$aid,org.sonatype.tycho:$aid"
-done
-
-for pommod in pack200; do
-   echo $pommod
-   aid=`basename $pommod`
-   install -pm 644 $pommod/pom.xml  %{buildroot}%{_mavenpomdir}/JPP.%{name}-$aid.pom
-   %add_maven_depmap JPP.%{name}-$aid.pom -a "org.eclipse.tycho:$aid,org.sonatype.tycho:$aid"
-done
-
-# javadoc
-install -dm 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
-
+tycho-extras bootstrap version.
 
 %files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/%{name}
+/usr/share/java/tycho-extras
+/usr/share/java/tycho-extras/target-platform-validation-plugin.jar
+/usr/share/java/tycho-extras/tycho-buildtimestamp-jgit.jar
+/usr/share/java/tycho-extras/tycho-custom-bundle-plugin.jar
+/usr/share/java/tycho-extras/tycho-eclipserun-plugin.jar
+/usr/share/java/tycho-extras/tycho-p2-extras-plugin.jar
+/usr/share/java/tycho-extras/tycho-pack200-impl.jar
+/usr/share/java/tycho-extras/tycho-pack200a-plugin.jar
+/usr/share/java/tycho-extras/tycho-pack200b-plugin.jar
+/usr/share/java/tycho-extras/tycho-source-feature-plugin.jar
+/usr/share/java/tycho-extras/tycho-sourceref-jgit.jar
+/usr/share/java/tycho-extras/tycho-version-bump-plugin.jar
+/usr/share/maven-fragments/tycho-extras
+/usr/share/maven-poms/JPP.tycho-extras-main.pom
+/usr/share/maven-poms/JPP.tycho-extras-pack200.pom
+/usr/share/maven-poms/JPP.tycho-extras-target-platform-validation-plugin.pom
+/usr/share/maven-poms/JPP.tycho-extras-tycho-buildtimestamp-jgit.pom
+/usr/share/maven-poms/JPP.tycho-extras-tycho-custom-bundle-plugin.pom
+/usr/share/maven-poms/JPP.tycho-extras-tycho-eclipserun-plugin.pom
+/usr/share/maven-poms/JPP.tycho-extras-tycho-p2-extras-plugin.pom
+/usr/share/maven-poms/JPP.tycho-extras-tycho-pack200-impl.pom
+/usr/share/maven-poms/JPP.tycho-extras-tycho-pack200a-plugin.pom
+/usr/share/maven-poms/JPP.tycho-extras-tycho-pack200b-plugin.pom
+/usr/share/maven-poms/JPP.tycho-extras-tycho-source-feature-plugin.pom
+/usr/share/maven-poms/JPP.tycho-extras-tycho-sourceref-jgit.pom
+/usr/share/maven-poms/JPP.tycho-extras-tycho-version-bump-plugin.pom
 
-%files javadoc
-%{_javadocdir}/%{name}
+#------------------------------------------------------------------------
+%package	-n tycho-extras-javadoc
+Version:	0.19.0
+Release:	1.0
+Summary:	tycho-extras-javadoc bootstrap version
+Requires:	javapackages-bootstrap
+Requires:	jpackage-utils
+Provides:	tycho-extras-javadoc = 0.19.0-1.0:2014.0
 
-%changelog
-* Fri Oct 25 2013 Roland Grunberg <rgrunber@redhat.com> - 0.19.0-1
-- Update to 0.19.0 Release.
+%description	-n tycho-extras-javadoc
+tycho-extras-javadoc bootstrap version.
 
-* Mon Jul 29 2013 Roland Grunberg <rgrunber@redhat.com> 0.18.1-1
-- Update to 0.18.1 Release.
+%files		-n tycho-extras-javadoc
+/usr/share/javadoc/tycho-extras
+/usr/share/javadoc/tycho-extras/allclasses-frame.html
+/usr/share/javadoc/tycho-extras/allclasses-noframe.html
+/usr/share/javadoc/tycho-extras/constant-values.html
+/usr/share/javadoc/tycho-extras/deprecated-list.html
+/usr/share/javadoc/tycho-extras/help-doc.html
+/usr/share/javadoc/tycho-extras/index-all.html
+/usr/share/javadoc/tycho-extras/index.html
+/usr/share/javadoc/tycho-extras/org
+/usr/share/javadoc/tycho-extras/org/eclipse
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/buildtimestamp
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/buildtimestamp/jgit
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/buildtimestamp/jgit/JGitBuildTimestampProvider.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/buildtimestamp/jgit/PathFilter.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/buildtimestamp/jgit/class-use
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/buildtimestamp/jgit/class-use/JGitBuildTimestampProvider.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/buildtimestamp/jgit/class-use/PathFilter.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/buildtimestamp/jgit/package-frame.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/buildtimestamp/jgit/package-summary.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/buildtimestamp/jgit/package-tree.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/buildtimestamp/jgit/package-use.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/custombundle
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/custombundle/CustomBundleMojo.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/custombundle/CustomBundleP2MetadataProvider.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/custombundle/class-use
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/custombundle/class-use/CustomBundleMojo.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/custombundle/class-use/CustomBundleP2MetadataProvider.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/custombundle/package-frame.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/custombundle/package-summary.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/custombundle/package-tree.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/custombundle/package-use.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/eclipserun
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/eclipserun/EclipseRunMojo.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/eclipserun/class-use
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/eclipserun/class-use/EclipseRunMojo.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/eclipserun/package-frame.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/eclipserun/package-summary.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/eclipserun/package-tree.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/eclipserun/package-use.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/EclipseInf.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/ForkedPack200Wrapper.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/Pack200Archiver.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/Pack200Wrapper.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/class-use
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/class-use/EclipseInf.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/class-use/ForkedPack200Wrapper.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/class-use/Pack200Archiver.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/class-use/Pack200Wrapper.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/mojo
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/mojo/Pack200NormalizeMojo.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/mojo/Pack200PackMojo.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/mojo/class-use
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/mojo/class-use/Pack200NormalizeMojo.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/mojo/class-use/Pack200PackMojo.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/mojo/package-frame.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/mojo/package-summary.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/mojo/package-tree.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/mojo/package-use.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/package-frame.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/package-summary.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/package-tree.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/pack200/package-use.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/sourcefeature
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/sourcefeature/SourceFeatureMojo.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/sourcefeature/SourceFeatureP2MetadataProvider.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/sourcefeature/class-use
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/sourcefeature/class-use/SourceFeatureMojo.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/sourcefeature/class-use/SourceFeatureP2MetadataProvider.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/sourcefeature/package-frame.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/sourcefeature/package-summary.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/sourcefeature/package-tree.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/sourcefeature/package-use.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/sourceref
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/sourceref/jgit
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/sourceref/jgit/JGitSourceReferencesProvider.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/sourceref/jgit/class-use
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/sourceref/jgit/class-use/JGitSourceReferencesProvider.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/sourceref/jgit/package-frame.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/sourceref/jgit/package-summary.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/sourceref/jgit/package-tree.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/sourceref/jgit/package-use.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/tpvalidator
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/tpvalidator/TPError.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/tpvalidator/TPValidationMojo.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/tpvalidator/class-use
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/tpvalidator/class-use/TPError.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/tpvalidator/class-use/TPValidationMojo.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/tpvalidator/package-frame.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/tpvalidator/package-summary.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/tpvalidator/package-tree.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/extras/tpvalidator/package-use.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/plugins
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/plugins/p2
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/plugins/p2/extras
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/plugins/p2/extras/Iu.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/plugins/p2/extras/MirrorMojo.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/plugins/p2/extras/PublishFeaturesAndBundlesMojo.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/plugins/p2/extras/Query.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/plugins/p2/extras/Repository.Layout.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/plugins/p2/extras/Repository.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/plugins/p2/extras/class-use
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/plugins/p2/extras/class-use/Iu.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/plugins/p2/extras/class-use/MirrorMojo.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/plugins/p2/extras/class-use/PublishFeaturesAndBundlesMojo.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/plugins/p2/extras/class-use/Query.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/plugins/p2/extras/class-use/Repository.Layout.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/plugins/p2/extras/class-use/Repository.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/plugins/p2/extras/package-frame.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/plugins/p2/extras/package-summary.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/plugins/p2/extras/package-tree.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/plugins/p2/extras/package-use.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/versionbump
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/versionbump/AbstractUpdateMojo.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/versionbump/UpdateProductMojo.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/versionbump/UpdateTargetMojo.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/versionbump/class-use
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/versionbump/class-use/AbstractUpdateMojo.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/versionbump/class-use/UpdateProductMojo.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/versionbump/class-use/UpdateTargetMojo.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/versionbump/package-frame.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/versionbump/package-summary.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/versionbump/package-tree.html
+/usr/share/javadoc/tycho-extras/org/eclipse/tycho/versionbump/package-use.html
+/usr/share/javadoc/tycho-extras/overview-frame.html
+/usr/share/javadoc/tycho-extras/overview-summary.html
+/usr/share/javadoc/tycho-extras/overview-tree.html
+/usr/share/javadoc/tycho-extras/package-list
+/usr/share/javadoc/tycho-extras/resources
+/usr/share/javadoc/tycho-extras/resources/background.gif
+/usr/share/javadoc/tycho-extras/resources/tab.gif
+/usr/share/javadoc/tycho-extras/resources/titlebar.gif
+/usr/share/javadoc/tycho-extras/resources/titlebar_end.gif
+/usr/share/javadoc/tycho-extras/serialized-form.html
+/usr/share/javadoc/tycho-extras/stylesheet.css
 
-* Thu May 30 2013 Roland Grunberg <rgrunber@redhat.com> 0.18.0-1
-- Update to 0.18.0 Release.
+#------------------------------------------------------------------------
+%prep
 
-* Tue May 7 2013 Roland Grunberg <rgrunber@redhat.com> 0.17.0-2
-- tycho-eclipserun-plugin should use the system local p2 repo.
+%build
 
-* Tue Apr 2 2013 Roland Grunberg <rgrunber@redhat.com> 0.17.0-1
-- Update to 0.17.0 Release.
-
-* Mon Feb 25 2013 Roland Grunberg <rgrunber@redhat.com> 0.17.0-0.1.git0a9370
-- Update to latest 0.17.0-SNAPSHOT.
-
-* Thu Feb 21 2013 Roland Grunberg <rgrunber@redhat.com> - 0.16.0-5
-- Fix PlexusConfiguration class issues identically across branches.
-
-* Wed Feb 20 2013 Roland Grunberg <rgrunber@redhat.com> - 0.16.0-4
-- Fix build issues relating to PlexusConfiguration.
-
-* Fri Feb 15 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.16.0-4
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
-
-* Thu Dec 13 2012 Roland Grunberg <rgrunber@redhat.com> 0.16.0-3
-- Fix upstream Bug 393686.
-
-* Fri Oct 19 2012 Roland Grunberg <rgrunber@redhat.com> 0.16.0-2
-- Update to 0.16.0 Release.
-
-* Mon Jul 30 2012 Roland Grunberg <rgrunber@redhat.com> 0.16.0-1.e58861
-- Update to 0.16.0 SNAPSHOT.
-
-* Fri Jul 27 2012 Roland Grunberg <rgrunber@redhat.com> 0.15.0-1
-- Update to 0.15.0.
-
-* Sun Jul 22 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.14.0-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
-
-* Mon Apr 16 2012 Roland Grunberg <rgrunber@redhat.com> - 0.14.0-1
-- Initial packaging of tycho extras.
+%install
+cd %{buildroot}
+rpm2cpio %{SOURCE0} | cpio -id
+rpm2cpio %{SOURCE1} | cpio -id
