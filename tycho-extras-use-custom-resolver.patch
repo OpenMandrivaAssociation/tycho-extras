@@ -1,0 +1,47 @@
+From 67c1c75a672438fdf338d559b76ddac2dbea8863 Mon Sep 17 00:00:00 2001
+From: Roland Grunberg <rgrunber@redhat.com>
+Date: Mon, 6 May 2013 14:20:58 -0400
+Subject: [PATCH] Use custom resolver for tycho-eclipserun-plugin.
+
+Add the system local p2 repository to the target platform used by
+tycho-eclipserun-plugin.
+
+Change-Id: Ifd0aae3f32c8077cd0ae33e70f40698c1129788d
+---
+ .../org/eclipse/tycho/extras/eclipserun/EclipseRunMojo.java | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/tycho-eclipserun-plugin/src/main/java/org/eclipse/tycho/extras/eclipserun/EclipseRunMojo.java b/tycho-eclipserun-plugin/src/main/java/org/eclipse/tycho/extras/eclipserun/EclipseRunMojo.java
+index ed00d4c..d059996 100644
+--- a/tycho-eclipserun-plugin/src/main/java/org/eclipse/tycho/extras/eclipserun/EclipseRunMojo.java
++++ b/tycho-eclipserun-plugin/src/main/java/org/eclipse/tycho/extras/eclipserun/EclipseRunMojo.java
+@@ -13,6 +13,8 @@ package org.eclipse.tycho.extras.eclipserun;
+ 
+ import java.io.File;
+ import java.net.MalformedURLException;
++import java.net.URI;
++import java.net.URISyntaxException;
+ import java.util.ArrayList;
+ import java.util.List;
+ import java.util.Map;
+@@ -202,6 +204,17 @@ public class EclipseRunMojo extends AbstractMojo {
+         TargetPlatformConfigurationStub tpConfiguration = new TargetPlatformConfigurationStub();
+         // we want to resolve from remote repos only
+         tpConfiguration.setForceIgnoreLocalArtifacts(true);
++
++        // Add Fedora Local P2 Repository when running in local mode
++        if (System.getProperty("TYCHO_MVN_LOCAL") != null || System.getProperty("TYCHO_MVN_RPMBUILD") != null) {
++            String uri = "file:" + System.getProperty("user.dir") + "/.m2/p2/repo";
++            try {
++                tpConfiguration.addP2Repository(new MavenRepositoryLocation(uri, new URI(uri)));
++            } catch (URISyntaxException e) {
++                getLog().warn("Unable to resolve repository URI : " + uri, e);
++            }
++        }
++
+         for (Repository repository : repositories) {
+             tpConfiguration.addP2Repository(new MavenRepositoryLocation(repository.getId(), repository.getLocation()));
+         }
+-- 
+1.8.3.1
+
