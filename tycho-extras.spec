@@ -4,28 +4,23 @@
 %global snap %{nil}
 
 Name:           tycho-extras
-Version:        0.19.0
-Release:        1.1%{?dist}
+Version:        0.20.0
+Release:        1%{?dist}
 Summary:        Additional plugins for Tycho
-
 
 License:        EPL
 URL:            http://eclipse.org/tycho/
-Source0:        http://git.eclipse.org/c/tycho/org.eclipse.tycho.extras.git/snapshot/tycho-extras-0.19.x.tar.bz2
+Source0:        http://git.eclipse.org/c/tycho/org.eclipse.tycho.extras.git/snapshot/tycho-extras-0.20.0.tar.bz2
 Patch0:         %{name}-fix-build.patch
 Patch1:         %{name}-use-custom-resolver.patch
 
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
-BuildRequires:  java-devel >= 1.5
 BuildRequires:  jgit
+BuildRequires:  maven-local
 BuildRequires:  tycho
 
-Requires:       jpackage-utils
-Requires:       java >= 1.5
-Requires:       jgit
-Requires:       tycho
+Requires:       java-headless >= 1.5
 
 
 %description
@@ -35,14 +30,14 @@ when building projects of an OSGi nature.
 
 %package javadoc
 Summary:        Java docs for %{name}
-
+Group:          Documentation
 Requires:       jpackage-utils
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n tycho-extras-0.19.x
+%setup -q -n tycho-extras-0.20.0
 %patch0 -p1
 %patch1 -p1
 
@@ -52,50 +47,32 @@ This package contains the API documentation for %{name}.
 # remove org.apache.maven:apache-maven zip
 %pom_remove_dep org.apache.maven:apache-maven tycho-p2-extras-plugin
 
+%mvn_alias :{*} org.eclipse.tycho:@1
+
 %build
 # To run tests, we need :
 # maven-properties-plugin (unclear licensing)
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
+%mvn_build -f
 
 %install
-install -d -m 755 %{buildroot}%{_javadir}/%{name}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
+%mvn_install
 
-install -pm 644 pom.xml  %{buildroot}%{_mavenpomdir}/JPP.%{name}-main.pom
-%add_maven_depmap JPP.%{name}-main.pom -a "org.eclipse.tycho:tycho-extras,org.sonatype.tycho:tycho-extras"
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 
-for mod in tycho-{custom-bundle,eclipserun,source-feature,version-bump}-plugin \
-           tycho-{buildtimestamp,sourceref}-jgit tycho-p2-extras-plugin \
-           pack200/tycho-pack200{{a,b}-plugin,-impl} \
-           target-platform-validation-plugin ; do
-   echo $mod
-   aid=`basename $mod`
-   install -pm 644 $mod/pom.xml  %{buildroot}%{_mavenpomdir}/JPP.%{name}-$aid.pom
-   install -m 644 $mod/target/$aid-%{version}%{snap}.jar %{buildroot}%{_javadir}/%{name}/$aid.jar
-   %add_maven_depmap JPP.%{name}-$aid.pom %{name}/$aid.jar -a "org.eclipse.tycho:$aid,org.sonatype.tycho:$aid"
-done
-
-for pommod in pack200; do
-   echo $pommod
-   aid=`basename $pommod`
-   install -pm 644 $pommod/pom.xml  %{buildroot}%{_mavenpomdir}/JPP.%{name}-$aid.pom
-   %add_maven_depmap JPP.%{name}-$aid.pom -a "org.eclipse.tycho:$aid,org.sonatype.tycho:$aid"
-done
-
-# javadoc
-install -dm 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
-
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/%{name}
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Mar 25 2014 Roland Grunberg <rgrunber@redhat.com> - 0.20.0-1
+- Update to 0.20.0 Release.
+
+* Tue Mar 11 2014 Michael Simacek <msimacek@redhat.com> - 0.19.0-3
+- Use mvn_build and mvn_install.
+- Drop manual requires.
+
+* Thu Feb 27 2014 Roland Grunberg <rgrunber@redhat.com> - 0.19.0-2
+- Change R:java to R:java-headless (Bug 1068575).
+
 * Fri Oct 25 2013 Roland Grunberg <rgrunber@redhat.com> - 0.19.0-1
 - Update to 0.19.0 Release.
 
