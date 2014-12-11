@@ -1,3 +1,5 @@
+removed_sources:
+  tycho-extras-0.20.0.tar.bz2: 785eb3349ebec33788284bf2ecdcc1d3470e5296
 sources:
   tycho-extras-0.19.x.tar.bz2: aa1d2c32c87eb788d861f2a89ad33a614b750e92
-  tycho-extras-0.20.0.tar.bz2: 785eb3349ebec33788284bf2ecdcc1d3470e5296
+  tycho-extras-0.21.0.tar.bz2: 1264df50b2a56890b472c7bdd74061b68be4e8e3

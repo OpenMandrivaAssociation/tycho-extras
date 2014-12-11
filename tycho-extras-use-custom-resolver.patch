@@ -1,4 +1,4 @@
-From 67c1c75a672438fdf338d559b76ddac2dbea8863 Mon Sep 17 00:00:00 2001
+From 974148165225fa3e5c137227b8bfc1e7cb77c0e2 Mon Sep 17 00:00:00 2001
 From: Roland Grunberg <rgrunber@redhat.com>
 Date: Mon, 6 May 2013 14:20:58 -0400
 Subject: [PATCH] Use custom resolver for tycho-eclipserun-plugin.
@@ -12,7 +12,7 @@ Change-Id: Ifd0aae3f32c8077cd0ae33e70f40698c1129788d
  1 file changed, 13 insertions(+)
 
 diff --git a/tycho-eclipserun-plugin/src/main/java/org/eclipse/tycho/extras/eclipserun/EclipseRunMojo.java b/tycho-eclipserun-plugin/src/main/java/org/eclipse/tycho/extras/eclipserun/EclipseRunMojo.java
-index ed00d4c..d059996 100644
+index 4c4baf0..6894fb6 100644
 --- a/tycho-eclipserun-plugin/src/main/java/org/eclipse/tycho/extras/eclipserun/EclipseRunMojo.java
 +++ b/tycho-eclipserun-plugin/src/main/java/org/eclipse/tycho/extras/eclipserun/EclipseRunMojo.java
 @@ -13,6 +13,8 @@ package org.eclipse.tycho.extras.eclipserun;
@@ -24,7 +24,7 @@ index ed00d4c..d059996 100644
  import java.util.ArrayList;
  import java.util.List;
  import java.util.Map;
-@@ -202,6 +204,17 @@ public class EclipseRunMojo extends AbstractMojo {
+@@ -187,6 +189,17 @@ public class EclipseRunMojo extends AbstractMojo {
          TargetPlatformConfigurationStub tpConfiguration = new TargetPlatformConfigurationStub();
          // we want to resolve from remote repos only
          tpConfiguration.setForceIgnoreLocalArtifacts(true);
@@ -43,5 +43,5 @@ index ed00d4c..d059996 100644
              tpConfiguration.addP2Repository(new MavenRepositoryLocation(repository.getId(), repository.getLocation()));
          }
 -- 
-1.8.3.1
+1.9.3
 

@@ -4,13 +4,13 @@
 %global snap %{nil}
 
 Name:           tycho-extras
-Version:        0.20.0
-Release:        1%{?dist}
+Version:        0.21.0
+Release:        1
 Summary:        Additional plugins for Tycho
-
+Group:		Development/Tools
 License:        EPL
 URL:            http://eclipse.org/tycho/
-Source0:        http://git.eclipse.org/c/tycho/org.eclipse.tycho.extras.git/snapshot/tycho-extras-0.20.0.tar.bz2
+Source0:        http://git.eclipse.org/c/tycho/org.eclipse.tycho.extras.git/snapshot/tycho-extras-0.21.0.tar.bz2
 Patch0:         %{name}-fix-build.patch
 Patch1:         %{name}-use-custom-resolver.patch
 
@@ -37,7 +37,7 @@ Requires:       jpackage-utils
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n tycho-extras-0.20.0
+%setup -q -n tycho-extras-0.21.0
 %patch0 -p1
 %patch1 -p1
 
@@ -63,6 +63,12 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Jul 25 2014 Roland Grunberg <rgrunber@redhat.com> - 0.21.0-1
+- Update to 0.21.0 Release.
+
+* Sun Jun 08 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.20.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Tue Mar 25 2014 Roland Grunberg <rgrunber@redhat.com> - 0.20.0-1
 - Update to 0.20.0 Release.
 
