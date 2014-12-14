@@ -4,13 +4,13 @@
 %global snap %{nil}
 
 Name:           tycho-extras
-Version:        0.21.0
-Release:        1
+Version:        0.22.0
+Release:        2%{?dist}
 Summary:        Additional plugins for Tycho
-Group:		Development/Tools
+
 License:        EPL
 URL:            http://eclipse.org/tycho/
-Source0:        http://git.eclipse.org/c/tycho/org.eclipse.tycho.extras.git/snapshot/tycho-extras-0.21.0.tar.bz2
+Source0:        http://git.eclipse.org/c/tycho/org.eclipse.tycho.extras.git/snapshot/org.eclipse.tycho.extras-tycho-extras-0.22.0.tar.bz2
 Patch0:         %{name}-fix-build.patch
 Patch1:         %{name}-use-custom-resolver.patch
 
@@ -18,7 +18,7 @@ BuildArch:      noarch
 
 BuildRequires:  jgit
 BuildRequires:  maven-local
-BuildRequires:  tycho
+BuildRequires:  tycho >= 0.22.0-3
 
 Requires:       java-headless >= 1.5
 
@@ -37,7 +37,7 @@ Requires:       jpackage-utils
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n tycho-extras-0.21.0
+%setup -q -n org.eclipse.tycho.extras-tycho-extras-0.22.0
 %patch0 -p1
 %patch1 -p1
 
@@ -59,10 +59,27 @@ This package contains the API documentation for %{name}.
 
 %files -f .mfiles
 %dir %{_javadir}/%{name}
+%dir %{_mavenpomdir}/%{name}
 
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Dec  5 2014 Mikolaj Izdebski <mizdebsk@redhat.com> - 0.22.0-2
+- Port to latest fedoraproject-p2
+
+* Mon Dec 01 2014 Mat Booth <mat.booth@redhat.com> - 0.22.0-1
+- Update to tagged release
+- Fix directory ownership problem
+
+* Tue Nov 25 2014 Roland Grunberg <rgrunber@redhat.com> - 0.22.0-0.1.gitef068a
+- Update to 0.22.0 pre-release.
+
+* Wed Sep 03 2014 Roland Grunberg <rgrunber@redhat.com> - 0.21.0-3
+- Use fedoraproject-p2 to do OSGi bundle discovery.
+
+* Thu Aug 21 2014 Roland Grunberg <rgrunber@redhat.com> - 0.21.0-2
+- Integrate fedoraproject-p2 functionality.
+
 * Fri Jul 25 2014 Roland Grunberg <rgrunber@redhat.com> - 0.21.0-1
 - Update to 0.21.0 Release.
 
