@@ -9,7 +9,7 @@ Release:        2%{?dist}
 Summary:        Additional plugins for Tycho
 
 License:        EPL
-URL:            http://eclipse.org/tycho/
+URL:            https://eclipse.org/tycho/
 Source0:        http://git.eclipse.org/c/tycho/org.eclipse.tycho.extras.git/snapshot/org.eclipse.tycho.extras-tycho-extras-0.22.0.tar.bz2
 Patch0:         %{name}-fix-build.patch
 Patch1:         %{name}-use-custom-resolver.patch
